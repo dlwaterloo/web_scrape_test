@@ -45,5 +45,3 @@ RUN playwright install
 
 # Copy the content of the local src directory to the working directory
 Add . .
-
-CMD ["python", "./script.py"]
