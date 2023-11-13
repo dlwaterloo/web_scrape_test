@@ -7,8 +7,9 @@ WORKDIR /usr/src/app
 COPY requirements.txt .
 
 # Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
+RUN pip install playwright
 RUN apt-get update && apt-get -y install --no-install-recommends \
         ca-certificates \
         apt-transport-https \
