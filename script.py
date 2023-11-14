@@ -16,7 +16,7 @@ async def run(playwright: Playwright):
     chromium = playwright.chromium
     chromium_path = chromium.executable_path  # This is the new line to add
     print(f"Chromium Path: {chromium_path}")  # This will log the Chromium path
-    browser = await chromium.launch()
+    browser = await chromium.launch(executable_path='/opt/render/.cache/ms-playwright/chromium-978106/chrome-linux/chrome')
     page = await browser.new_page()
     await page.set_extra_http_headers({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
