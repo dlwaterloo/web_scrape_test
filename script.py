@@ -14,10 +14,8 @@ app = FastAPI()
 
 async def run(playwright: Playwright):
     chromium = playwright.chromium
-
-    chromium_path = chromium.executable_path()
-    logging.info(f"Chromium path: {chromium_path}")
-    
+    chromium_path = chromium.executable_path  # This is the new line to add
+    print(f"Chromium Path: {chromium_path}")  # This will log the Chromium path
     browser = await chromium.launch()
     page = await browser.new_page()
     await page.set_extra_http_headers({
