@@ -1,5 +1,8 @@
+from fastapi import FastAPI
 import asyncio
 from playwright.async_api import async_playwright, Playwright
+
+app = FastAPI()
 
 async def run(playwright: Playwright):
     chromium = playwright.chromium
@@ -15,7 +18,11 @@ async def run(playwright: Playwright):
     # other actions...
     await browser.close()
 
-async def main():
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+
+@app.get("/scrape")
+async def scrape():
     async with async_playwright() as playwright:
-        await run(playwright)
-asyncio.run(main())
+        return await run(playwright)
