@@ -1,11 +1,23 @@
 from fastapi import FastAPI
 import asyncio
 from playwright.async_api import async_playwright, Playwright
+import logging
+
+logging.basicConfig(
+    format=(
+        "%(asctime)s | %(levelname)-6s | logger=%(name)s | %(filename)s[%(funcName)s()]:L%(lineno)-4d |  %(message)s"
+    ),
+    level=logging.INFO,
+)
 
 app = FastAPI()
 
 async def run(playwright: Playwright):
     chromium = playwright.chromium
+
+    chromium_path = chromium.executable_path()
+    logging.info(f"Chromium path: {chromium_path}")
+    
     browser = await chromium.launch()
     page = await browser.new_page()
     await page.set_extra_http_headers({
