@@ -2,6 +2,11 @@ from fastapi import FastAPI
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 import logging
+from bs4 import BeautifulSoup
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(
     format=(
@@ -13,20 +18,24 @@ logging.basicConfig(
 app = FastAPI()
 
 async def run(playwright: Playwright):
+    proxy_server = os.getenv('PROXY_SERVER')
+    proxy_username = os.getenv('PROXY_USERNAME')
+    proxy_password = os.getenv('PROXY_PASSWORD')
+
     chromium = playwright.chromium
-    chromium_path = chromium.executable_path
-    print(f"Chromium Path: {chromium_path}")
-    browser = await chromium.launch()
+    browser = await chromium.launch(proxy={
+        'server': proxy_server,
+        'username': proxy_username,
+        'password': proxy_password,
+    })
     page = await browser.new_page()
     await page.set_extra_http_headers({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-  })
+    })
     await page.goto(url="https://www.instagram.com/social__ai/?hl=en")
-    await page.wait_for_timeout(3000)
+    await page.wait_for_timeout(5000)
     html_content = await page.content()
-    print(html_content)
-    # other actions...
-    await browser.close()
+    return(html_content)
 
 @app.get("/")
 async def read_root():
