@@ -27,7 +27,9 @@ async def run(playwright: Playwright):
         'server': proxy_server,
         'username': proxy_username,
         'password': proxy_password,
-    })
+    },
+    ignore_https_errors=True
+    )
     page = await browser.new_page()
     await page.set_extra_http_headers({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
