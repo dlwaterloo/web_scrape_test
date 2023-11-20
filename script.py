@@ -33,7 +33,7 @@ async def run(playwright: Playwright):
     await page.set_extra_http_headers({
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
     })
-    await page.goto(url="https://www.facebook.com/spacextechnologies")
+    await page.goto(url="https://www.instagram.com/google/?hl=en")
     await page.wait_for_timeout(5000)
     html_content = await page.content()
     return(html_content)
